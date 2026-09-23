@@ -16,6 +16,22 @@ interface RecognizerSource {
 
     val closed: Boolean
 
+    /**
+     * Streaming sources (Vosk) emit partial results while recording.
+     * Non-streaming sources (Whisper/Parakeet) buffer audio and transcribe
+     * once when recording stops.
+     */
+    val isStreaming: Boolean
+        get() = true
+
+    /**
+     * True when this source can transcribe any language (multilingual
+     * Whisper with auto-detect): the fallback when no model matches the
+     * requested locale.
+     */
+    val isUniversal: Boolean
+        get() = false
+
     @get:StringRes
     val errorMessage: Int
     val name: String

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--    <color name="colorPrimary">#4CAF50</color>&lt;!&ndash; Green 500 &ndash;&gt;-->
+    <!-- Night variant of the launcher/theme palette. The Compose keyboard UI
+        takes its colors from theme/Theme.kt (source of truth); this file only
+        serves the launcher theme (AppTheme) and resource qualifiers. -->
     <color name="colorPrimary">#388E3C</color><!-- Green 700 -->
-    <!--    <color name="colorAccent">#FF9800</color>&lt;!&ndash; Orange 500 &ndash;&gt;-->
     <color name="colorAccent">#F57C00</color><!-- Orange 700 -->
 
-    <color name="colorOnPrimary">#66BB6A</color> <!-- Teal 400 -->
+    <color name="colorOnPrimary">#66BB6A</color><!-- Green 400 -->
 
     <color name="materialYouForeground">@color/materialYouForegroundDark</color>
 </resources>

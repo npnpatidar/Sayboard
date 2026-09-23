@@ -5,7 +5,6 @@
     <string name="mic_info_error">Erro</string>
     <string name="mic_info_preparing">Preparando o reconhecedor</string>
     <string name="mic_info_ready">Pronto</string>
-    <string name="mic_info_error_failed">Falha ao inicializar o reconhecedor %s</string>
     <string name="mic_info_recording">Fale algo</string>
     <string name="toast_error_no_previous_ime">Não há um método de entrada anterior!</string>
     <string name="mic_error_no_recognizers">Nenhum reconhecedor instalado!</string>
@@ -15,11 +14,9 @@
     <string name="mic_audio_device_title">Dispositivo de entrada de áudio</string>
     <string name="model_dialog_title">Selecionar modelo</string>
     <string name="button_cancel">Cancelar</string>
-    <string name="button_select">Selecionar</string>
     <string name="button_default">Padrão</string>
     <string name="button_confirm">OK</string>
     <string name="option_none">Nenhuma</string>
-    <string name="title_setup">Configuração</string>
     <string name="title_models">Modelos</string>
     <string name="title_ui">Interface</string>
     <string name="title_keyboard">Teclado</string>
@@ -30,16 +27,7 @@
     <string name="mic_permission_granted">A permissão do microfone foi concedida</string>
     <string name="keyboard_not_enabled">Habilitar teclado</string>
     <string name="keyboard_enabled">Teclado habilitado</string>
-    <string name="switch_keyboard">Alternar teclado</string>
-    <string name="open_ime_switcher">Abrir o alternador de método de entrada</string>
-    <string name="open_ime_note">Nota: você pode abrir o alternador de método de entrada pressionando o botão de microfone enquanto o teclado estiver aberto.</string>
     <!--  Models Preferences  -->
-    <string name="menu_models_add_server">Adicionar servidor Vosk</string>
-    <string name="dialog_add_vosk_server_title">Adicionar servidor Vosk</string>
-    <string name="dialog_add_vosk_server_hostname">Nome do host</string>
-    <string name="dialog_add_vosk_server_port">Porta</string>
-    <string name="dialog_add_vosk_server_add">Adicionar</string>
-    <string name="dialog_add_vosk_server_cancel">Cancelar</string>
     <string name="models_download_state_unknown">Desconhecido</string>
     <string name="models_download_state_pending">Pendente</string>
     <string name="models_download_state_download_started">Baixando</string>
@@ -51,7 +39,6 @@
     <string name="models_download_state_canceled">Cancelado</string>
     <string name="models_download_state">Estado: %s</string>
     <string name="models_pending_download_state">Estado: download pendente</string>
-    <string name="models_model_display_name_null">Nulo</string>
     <string name="models_download_dialog_title">Baixar modelo</string>
     <string name="models_import_dialog_import">Importar</string>
     <string name="models_import_dialog_title">Importar modelo</string>
@@ -59,24 +46,14 @@
     <string name="models_import_dialog_text_link">da página do Vosk</string>
     <string name="models_import_dialog_text_after_link">- certifique-se de escolher um modelo pequeno - e então selecione-o no seletor de arquivos após pressionar Importar</string>
     <!-- UI Preferences -->
-    <string name="ui_light_theme_header">Tema claro</string>
-    <string name="ui_light_theme_foreground_material_you_title">Utilizar cor de primeiro plano do Material You</string>
-    <string name="ui_light_theme_foreground_color_title">Cor de primeiro plano</string>
-    <string name="ui_light_theme_background_color_title">Cor de fundo</string>
-    <string name="ui_dark_theme_header">Tema escuro</string>
-    <string name="ui_dark_theme_foreground_material_you_title">Utilizar cor de primeiro plano do Material You</string>
-    <string name="ui_dark_theme_foreground_color_title">Cor de primeiro plano</string>
-    <string name="ui_dark_theme_background_color_title">Cor de fundo</string>
-    <string name="ui_theme_reset_color">Redefinir</string>
     <!--  Logic Preferences  -->
-    <string name="logic_logic_header">Lógica</string>
     <string name="logic_keep_screen_awake_title">Manter a tela ligada</string>
     <string name="logic_listen_immediately_title">Escutar imediatamente</string>
-    <string name="logic_listen_immediately_summery">Começar a escutar imediatamente quando o reconhecedor estiver pronto.</string>
+    <string name="logic_listen_immediately_summary">Começar a escutar imediatamente quando o reconhecedor estiver pronto.</string>
     <string name="logic_auto_switch_back_title">Voltar automaticamente</string>
-    <string name="logic_auto_switch_back_summery">Alternar automaticamente para o teclado anterior quando o teclado for oculto.</string>
+    <string name="logic_auto_switch_back_summary">Alternar automaticamente para o teclado anterior quando o teclado for oculto.</string>
     <string name="logic_keep_model_in_ram_title">Manter o modelo na memória RAM (quando fechado)</string>
-    <string name="logic_keep_model_in_ram_summery">Mantém o modelo em memória RAM para acelerar a abertura do teclado. Aumenta o uso de RAM.</string>
+    <string name="logic_keep_model_in_ram_summary">Mantém o modelo em memória RAM para acelerar a abertura do teclado. Aumenta o uso de RAM.</string>
     <string name="logic_auto_capitalize_title">Maiúsculos automáticos</string>
     <string name="logic_auto_capitalize_summary">Deixa a primeira letra após um ponto em maiúsculos (onde aplicável).</string>
     <string name="p_keep_screen_awake_mode_never">Nunca</string>
@@ -87,9 +64,6 @@
     <string name="keyboard_height_portrait_title">Altura do teclado no modo retrato (%)</string>
     <string name="keyboard_height_landscape_title">Altura do teclado em no paisagem (%)</string>
     <string name="keyboard_keys_header">Teclas</string>
-    <string name="keyboard_keys_top_title">Teclas superiores</string>
-    <string name="keyboard_keys_left_title">Teclas da esquerda</string>
-    <string name="keyboard_keys_right_title">Teclas da direita</string>
     <string name="keyboard_keys_dialog_key_entry">Rótulo: %1$s, Texto: %2$s</string>
     <string name="keyboard_keys_dialog_key_label_label">Rótulo</string>
     <string name="keyboard_keys_dialog_key_text_label">Texto</string>

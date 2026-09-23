@@ -21,20 +21,20 @@ object AppCtx {
 
     @JvmStatic
     fun getStringRes(@StringRes res: Int): String {
-        return appCtx!!.getString(res)
+        return checkNotNull(appCtx) { "AppCtx not initialized: call setAppCtx() from Application.onCreate first" }.getString(res)
     }
 
     @JvmStatic
     fun getIntegerRes(@IntegerRes res: Int): Int {
-        return appCtx!!.resources.getInteger(res)
+        return checkNotNull(appCtx) { "AppCtx not initialized: call setAppCtx() from Application.onCreate first" }.resources.getInteger(res)
     }
 
     @JvmStatic
     fun getBoolRes(@BoolRes res: Int): Boolean {
-        return appCtx!!.resources.getBoolean(res)
+        return checkNotNull(appCtx) { "AppCtx not initialized: call setAppCtx() from Application.onCreate first" }.resources.getBoolean(res)
     }
 
     fun getStringArrayRes(@ArrayRes res: Int): Array<String> {
-        return appCtx!!.resources.getStringArray(res)
+        return checkNotNull(appCtx) { "AppCtx not initialized: call setAppCtx() from Application.onCreate first" }.resources.getStringArray(res)
     }
 }

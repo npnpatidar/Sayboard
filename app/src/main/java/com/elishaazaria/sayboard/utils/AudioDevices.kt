@@ -3,7 +3,6 @@ package com.elishaazaria.sayboard.utils
 import android.content.Context
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
-import android.os.Build
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bluetooth
 import androidx.compose.material.icons.filled.Call
@@ -14,12 +13,6 @@ import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.ui.graphics.vector.ImageVector
 
 object AudioDevices {
-    private val validTypes = listOf(
-        AudioDeviceInfo.TYPE_BUILTIN_MIC,
-        AudioDeviceInfo.TYPE_USB_HEADSET,
-        AudioDeviceInfo.TYPE_BLE_HEADSET
-    )
-
     fun validAudioDevices(context: Context): List<AudioDeviceInfo> {
         val audioManager =
             context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -42,10 +35,11 @@ fun AudioDeviceInfo.toIcon() : ImageVector {
     }
 }
 
+/** U15: product name only — device addresses are PII. */
 fun AudioDeviceInfo.describe(): String {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && address.isNotBlank()) {
-        return "$productName ($address)"
-    } else {
-        return "$productName"
+    return try {
+        "$productName"
+    } catch (_: Exception) {
+        ""
     }
 }

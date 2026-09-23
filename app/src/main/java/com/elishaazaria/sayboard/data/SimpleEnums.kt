@@ -26,3 +26,7 @@ enum class KeepScreenAwakeMode {
         }
     }
 }
+
+enum class ThemeMode {
+    SYSTEM, LIGHT, DARK
+}
