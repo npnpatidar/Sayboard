@@ -3,16 +3,21 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
-        maven { url "https://jitpack.io" }
     }
 }
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        gradlePluginPortal()
         google()
         mavenCentral()
-        maven { url "https://jitpack.io" }
+        // B20: JitPack is unsigned and builds on demand; restrict it to the
+        // sherpa-onnx group so no other dependency can resolve from here.
+        maven {
+            url "https://jitpack.io"
+            content {
+                includeGroupByRegex "com\\.github\\.k2-fsa.*"
+            }
+        }
     }
 }
 

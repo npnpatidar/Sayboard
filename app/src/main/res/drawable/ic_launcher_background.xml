@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Pre-24 fallback for @drawable/ic_launcher_background (S23): the qualified
+    drawable-v24 copy alone leaves no match on API < 24, which the
+    mipmap-anydpi-v26 adaptive icon resolves against. Identical content. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"

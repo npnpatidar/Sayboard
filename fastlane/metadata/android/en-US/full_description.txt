@@ -1,10 +1,15 @@
-<p>This project provides a voice keyboard using <a href="https://alphacephei.com/vosk/android">Vosk</a>. It is based on <a href="https://github.com/Felicis/vosk-android-demo">https://github.com/Felicis/vosk-android-demo</a></p>.
-<p>This app requires a Vosk model to run. You can use the built-in downloader or download manually from <a href="https://alphacephei.com/vosk/models">https://alphacephei.com/vosk/models</a>, and then import into the app.</p>
+<p>Sayboard is an open-source, on-device voice keyboard (IME) for Android. It transcribes speech locally on the phone — nothing you dictate is ever sent anywhere. <code>INTERNET</code> (an install-time normal permission) is needed only for model downloads and update checks; on-device transcription needs none, and Offline mode blocks all network use in-app.</p>
+<p>Speech engines and models (built-in downloader or manual import): <strong>Vosk</strong> live transcription (21 small per-language models, tens of MB each); <strong>Whisper</strong> record-then-transcribe (tiny ~120 MB, base ~200 MB, small ~610 MB, turbo ~540 MB); <strong>Parakeet</strong> record-then-transcribe (110M-en ~103 MB, 0.6B-v2-en ~460 MB, 0.6B-v3-EU ~465 MB); <strong>Streaming</strong> live transcription (zipformer-en ~296 MB, parakeet-unified-en ~480 MB). Stop-on-silence uses the bundled Silero VAD model. Each model ships under its own data license — check the model page before downloading; library licenses are listed in-app (Show Used Libraries).</p>
+<p>Downloading or checking for updates contacts <code>alphacephei.com</code> (Vosk) and <code>github.com</code> (sherpa-onnx releases); transcription itself is fully offline. On-device transcription is the default and only mode — no remote-server option ships (a custom server would stream audio there, so per-server consent would be required before any such feature).</p>
 <br/>
-<p>Sayboard uses for the following permissions:</p>
+<p>Sayboard uses the following permissions:</p>
 <ul>
-  <li>INTERNET - to download the models. This permission is not required, and can be revoked through the device settings in compatible ROMs. <strong>Sayboard does not, and never will, send any of your information over the internet!</strong>.</li>
-  <li>RECORD_AUDIO - well, this is a voice keyboard after all.</li>
-  <li>POST_NOTIFICATIONS - to show download and import progress.</li>
-  <li>FOREGROUND_SERVICE - to download and import models in the background.</li>
+  <li>RECORD_AUDIO — microphone for voice input; also gates the optional external recognition service (off by default, mic indicator while serving, rate-limited).</li>
+  <li>INTERNET — model downloads and update checks only.</li>
+  <li>POST_NOTIFICATIONS — download/import progress.</li>
+  <li>FOREGROUND_SERVICE + FOREGROUND_SERVICE_DATA_SYNC — background model download/import.</li>
+  <li>FOREGROUND_SERVICE_MICROPHONE — recognition service declaration.</li>
+  <li>FOREGROUND_SERVICE_SPECIAL_USE — keep-alive and download services.</li>
+  <li>RECEIVE_BOOT_COMPLETED — restores the opt-in keep-alive after reboot, only if enabled (replaces the old QUERY_ALL_PACKAGES blanket with a narrow &lt;queries&gt; entry).</li>
 </ul>
+<p>Keep-alive is off by default (permanent notification with Turn-off action, never touches the microphone). Logs stay in private app storage (5-session rotation, redacted, in-app export, opt-out). Needs one speech model to run; Android 6.0+.</p>

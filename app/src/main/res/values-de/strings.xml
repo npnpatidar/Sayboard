@@ -7,19 +7,17 @@
     <string name="mic_info_error">Error</string>
     <string name="mic_info_preparing">Vorbereiten der Erkennung</string>
     <string name="mic_info_ready">Fertig</string>
-    <string name="mic_info_error_failed">Fehler bei der Initialisierung %s</string>
     <string name="mic_info_recording">Sag Etwas</string>
 
     <string name="toast_error_no_previous_ime">Kein vorherige IME!</string>
     <string name="mic_error_no_recognizers">Keine Erkennung installiert!</string>
-    <string name="mic_error_no_permission">Mikrofon Erlaubniss nicht gewährt!</string>
+    <string name="mic_error_no_permission">Mikrofon-Erlaubnis nicht gewährt!</string>
     <string name="mic_error_recognizer_error">Erkennungs Fehler</string>
     <string name="mic_error_mic_in_use">Mikrofon ist wird bereits benutzt!</string>
 
-    <string name="model_dialog_title">WähleModel</string>
+    <string name="model_dialog_title">Modell wählen</string>
 
     <string name="button_cancel">Abbruch</string>
-    <string name="button_select">Auswählen</string>
 
 
     <string name="option_none">Keine</string>
@@ -30,23 +28,16 @@
 
     <!--  Setup  -->
 
-    <string name="mic_permission_not_granted">Gewähre Mikrofone Erlaubniss</string>
-    <string name="mic_permission_granted">Mikrofone Erlaubniss Gewährt</string>
+    <string name="mic_permission_not_granted">Gewähre Mikrofon-Erlaubnis</string>
+    <string name="mic_permission_granted">Mikrofon-Erlaubnis gewährt</string>
 
     <string name="keyboard_not_enabled">Aktiviere Tastatur</string>
     <string name="keyboard_enabled">Tastatur aktiviert</string>
 
-    <string name="switch_keyboard">Wechsle Tastatur</string>
-    <string name="open_ime_switcher">Öffne IME Switcher</string>
-    <string name="open_ime_note">Notiz: Man kann den IME Switcher öffnen wenn die Tastatur offen ist indem man den Mikrofon Konpf lange drückt.</string>
     <string name="show_libraries">Zeige genutzte Libraries</string>
 
 
     <!--  Models Preferences  -->
-    <string name="menu_models_add_server">Vosk Server zufügen</string>
-    <string name="dialog_add_vosk_server_title">Vosk Server zufügen</string>
-    <string name="dialog_add_vosk_server_add">Zufügen</string>
-    <string name="dialog_add_vosk_server_cancel">Abbruch</string>
 
     <string name="models_download_state_unknown">Unbekannt</string>
     <string name="models_download_state_pending">in Arbeit</string>
@@ -56,7 +47,7 @@
     <string name="models_download_state_unzip_finished">Unzippen Fertig</string>
     <string name="models_download_state_finished">Fertig</string>
     <string name="models_download_state_error">Fehler</string>
-    <string name="models_download_state_canceled">Abegebrochen</string>
+    <string name="models_download_state_canceled">Abgebrochen</string>
 
     <string name="models_download_dialog_title">Download Modell</string>
 
@@ -66,26 +57,17 @@
     <string name="models_import_dialog_text_after_link"> - Stelle sicher ein "kleines" Modell zu nehmen - Nachdem du auf Import klickst und wähle es dann in der Dateiauswahl</string>
 
     <!-- UI Preferences -->
-    <string name="ui_light_theme_header">Helles Thema</string>
-    <string name="ui_light_theme_foreground_material_you_title">Benutze Material You Vordergrund Farbe</string>
-    <string name="ui_light_theme_foreground_color_title">Vordergrund Farbe</string>
-    <string name="ui_light_theme_background_color_title">Hintergrund Farbe</string>
 
 
-    <string name="ui_dark_theme_header">Dunkles Thema</string>
-    <string name="ui_dark_theme_foreground_material_you_title">Benutze Material You Vordergrund Farbe</string>
-    <string name="ui_dark_theme_foreground_color_title">Vordergrund Farbe</string>
-    <string name="ui_dark_theme_background_color_title">Hintergrund Farbe</string>
 
     <!--  Logic Preferences  -->
-    <string name="logic_logic_header">Logik</string>
     <string name="logic_keep_screen_awake_title">Bildschirm wach halten</string>
     <string name="logic_listen_immediately_title">Sofort Zuhören</string>
-    <string name="logic_listen_immediately_summery">Starte das Zuhören sofort wenn die Erkennung startbereit ist.</string>
+    <string name="logic_listen_immediately_summary">Starte das Zuhören sofort wenn die Erkennung startbereit ist.</string>
     <string name="logic_auto_switch_back_title">Automatisch umstellen</string>
-    <string name="logic_auto_switch_back_summery">Automatisch zur vorherigen Tastatur wechseln wenn die Tastatur versteckt ist.</string>
-    <string name="logic_keep_model_in_ram_title">Halte das Modell im RAM (when closed)</string>
-    <string name="logic_keep_model_in_ram_summery">Hält das Modell im Ram um das Öffnen zu beschleunigen. Braucht mehr Ram.</string>
+    <string name="logic_auto_switch_back_summary">Automatisch zur vorherigen Tastatur wechseln wenn die Tastatur versteckt ist.</string>
+    <string name="logic_keep_model_in_ram_title">Halte das Modell im RAM (wenn geschlossen)</string>
+    <string name="logic_keep_model_in_ram_summary">Hält das Modell im Ram um das Öffnen zu beschleunigen. Braucht mehr Ram.</string>
     <string name="logic_auto_capitalize_title">Autom. Großschreiben</string>
     <string name="logic_auto_capitalize_summary">Automatisch den Anfangsbuchstaben nach einem Satzzeichen großschreiben.</string>
     <string name="logic_default_ime">Standart IME</string>
@@ -102,9 +84,6 @@
     <string name="keyboard_height_landscape_title">Tastaturhöhe im Landschafts Modus (%)</string>
 
     <string name="keyboard_keys_header">Tasten</string>
-    <string name="keyboard_keys_top_title">Oberste Tasten</string>
-    <string name="keyboard_keys_left_title">Linke Tasten Keys</string>
-    <string name="keyboard_keys_right_title">Rechte Tasten</string>
 
 
     <!--  Notifications  -->

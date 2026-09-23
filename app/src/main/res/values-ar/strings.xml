@@ -3,20 +3,13 @@
     <string name="mic_info_error">خطأ</string>
     <string name="keyboard_keys_header">الأزرار</string>
     <string name="models_download_state_unknown">غير معروف</string>
-    <string name="title_setup">الإعداد</string>
     <string name="p_keep_screen_awake_mode_never">أبدًا</string>
     <string name="models_download_dialog_title">تنزيل النموذج</string>
     <string name="title_ui">واجهة المستخدم</string>
-    <string name="ui_theme_reset_color">إعادة التعيين</string>
-    <string name="dialog_add_vosk_server_add">أضف</string>
     <string name="models_download_state_error">خطأ</string>
     <string name="models_download_state_finished">انتهى</string>
-    <string name="dialog_add_vosk_server_title">إضافة خادم صوتي Vosk</string>
     <string name="p_keep_screen_awake_mode_when_listening">عند الاستماع</string>
     <string name="model_dialog_title">اختيار النموذج</string>
-    <string name="menu_models_add_server">إضافة خادم صوتي Vosk</string>
-    <string name="dialog_add_vosk_server_hostname">اسم المضيف</string>
-    <string name="dialog_add_vosk_server_cancel">إلغاﺀ</string>
     <string name="models_import_dialog_title">استيراد النموذج</string>
     <string name="keyboard_not_enabled">تمكين لوحة المفاتيح</string>
     <string name="title_models">النماذج</string>
@@ -34,5 +27,4 @@
     <string name="title_keyboard">لوحة المفاتيح</string>
 
     <string name="models_download_state_unzip_started">فك الضغط جارٍ…</string>
-    <string name="dialog_add_vosk_server_port">المنفذ</string>
 </resources>

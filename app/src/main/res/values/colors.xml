@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Launcher/theme palette only. The Compose keyboard UI takes its colors
+        from theme/Theme.kt (source of truth); this file styles the launcher
+        activity window (AppTheme) and resource-qualified overrides. -->
     <color name="colorPrimary">#4CAF50</color><!-- Green 500 -->
-    <!--    <color name="colorPrimaryDark">#388E3C</color>&lt;!&ndash; Green 700 &ndash;&gt;-->
     <color name="colorAccent">#FF9800</color><!-- Orange 500 -->
-    <!--    <color name="colorAccentDark">#F57C00</color>&lt;!&ndash; Orange 700 &ndash;&gt;-->
 
     <color name="colorOnPrimary">#377A00</color>
 

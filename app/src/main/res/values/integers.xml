@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="keyboard_height_min">1</integer>
-    <integer name="keyboard_height_max">100</integer>
+    <!-- keyboard_height_min/max removed (S18: unwired). Keyboard height is a
+        user preference (percent of screen); nothing reads @integer/*. -->
 </resources>

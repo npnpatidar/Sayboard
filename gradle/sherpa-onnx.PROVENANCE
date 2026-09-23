@@ -1,0 +1,41 @@
+# sherpa-onnx supply-chain record
+#
+# The sherpa-onnx AAR is built on demand by JitPack from GitHub source
+# (no Maven Central signatures), so the exact binaries are pinned here.
+# CI verifies these hashes BEFORE any gradle build; a mismatch fails the
+# build (tag moved, rebuild, or compromise).
+#
+# Upstream tag: v1.13.8
+# Upstream commit: 11afbd009a7f8c08f4bcf2fc1b265d0df4670fbf
+# (https://github.com/k2-fsa/sherpa-onnx/commit/11afbd009a7f8c08f4bcf2fc1b265d0df4670fbf)
+#
+# NOTE: only the AAR below is consumed by the build (app/build.gradle
+# coordinate com.github.k2-fsa.sherpa-onnx:sherpa-onnx:1.13.8). The
+# sherpa-onnx-jvm jar was previously listed here but is unused, so it is
+# no longer fetched or verified.
+#
+# To upgrade: change the version in app/build.gradle, download the new
+# artifacts from the URLs below, update the hashes + commit, and push.
+
+633c24321e06b1fe79feafa03ea16cbc0f8a286641e2da3559bac91bdb13bd96  sherpa-onnx-1.13.8.aar
+
+# Source URL (group com.github.k2-fsa.sherpa-onnx, submodule layout):
+# https://jitpack.io/com/github/k2-fsa/sherpa-onnx/sherpa-onnx/1.13.8/sherpa-onnx-1.13.8.aar
+
+# --- Additional pinned artifacts (B12/B23) ---
+#
+# Vosk + JNA resolve from Maven Central (versions in app/build.gradle).
+# Hashes below cover the exact AARs consumed by the build.
+#
+# Regenerate with:
+#   curl -fsSL --retry 3 "https://repo1.maven.org/maven2/com/alphacephei/vosk-android/0.3.32/vosk-android-0.3.32.aar" -o vosk-android-0.3.32.aar
+#   sha256sum vosk-android-0.3.32.aar
+#   curl -fsSL --retry 3 "https://repo1.maven.org/maven2/net/java/dev/jna/jna/5.17.0/jna-5.17.0.aar" -o jna-5.17.0.aar
+#   sha256sum jna-5.17.0.aar
+
+627857a54e0f80a205a278876387bbdedc95c277b1f9154fd9f379f98a17c00e  vosk-android-0.3.32.aar
+4dbeffffa665d97ad5aa7eee297531d3c841a86716ab7f774fd6956422b3cf38  jna-5.17.0.aar
+
+# Source URLs:
+# https://repo1.maven.org/maven2/com/alphacephei/vosk-android/0.3.32/vosk-android-0.3.32.aar
+# https://repo1.maven.org/maven2/net/java/dev/jna/jna/5.17.0/jna-5.17.0.aar

@@ -8,8 +8,9 @@
     <string name="mic_info_error">Error</string>
     <string name="mic_info_preparing">Preparing the recognizer</string>
     <string name="mic_info_ready">Ready</string>
-    <string name="mic_info_error_failed">Failed to initialize recognizer %s</string>
     <string name="mic_info_recording">Say something</string>
+    <string name="mic_info_tap_to_transcribe">Tap mic to transcribe</string>
+    <string name="mic_info_transcribing">Transcribing…</string>
 
     <string name="toast_error_no_previous_ime">No previous IME!</string>
     <string name="mic_error_no_recognizers">No Recognizers installed!</string>
@@ -22,13 +23,11 @@
     <string name="model_dialog_title">Select Model</string>
 
     <string name="button_cancel">Cancel</string>
-    <string name="button_select">Select</string>
     <string name="button_default">Default</string>
     <string name="button_confirm">OK</string>
 
     <string name="option_none">None</string>
 
-    <string name="title_setup">Setup</string>
     <string name="title_models">Models</string>
     <string name="title_ui">User Interface</string>
     <string name="title_keyboard">Keyboard</string>
@@ -42,20 +41,9 @@
     <string name="keyboard_not_enabled">Enable Keyboard</string>
     <string name="keyboard_enabled">Keyboard Enabled</string>
 
-    <string name="switch_keyboard">Switch Keyboard</string>
-    <string name="open_ime_switcher">Open IME Switcher</string>
-    <string name="open_ime_note">Note: you can open the IME switcher when the keyboard is open by long pressing the Mic button.</string>
     <string name="show_libraries">Show Used Libraries</string>
 
-    <string name="title_activity_settings" translatable="false">SettingsActivity</string>
-
     <!--  Models Preferences  -->
-    <string name="menu_models_add_server">Add Vosk Server</string>
-    <string name="dialog_add_vosk_server_title">Add Vosk Server</string>
-    <string name="dialog_add_vosk_server_hostname">Hostname</string>
-    <string name="dialog_add_vosk_server_port">Port</string>
-    <string name="dialog_add_vosk_server_add">Add</string>
-    <string name="dialog_add_vosk_server_cancel">Cancel</string>
 
     <string name="models_download_state_unknown">Unknown</string>
     <string name="models_download_state_pending">Pending</string>
@@ -70,39 +58,99 @@
     <string name="models_download_state">State: %s</string>
     <string name="models_pending_download_state">State: Pending Download</string>
 
-    <string name="models_model_display_name_null">Null</string>
-
     <string name="models_download_dialog_title">Download Model</string>
+    <string name="models_check_updates">Check for model updates</string>
+    <string name="models_update_available">Update available — tap to redownload</string>
+    <string name="models_copy_url">Copy download link</string>
+    <string name="models_url_copied">Download link copied</string>
+    <string name="models_see_log">Details are in the private on-device log — use Export log to share it</string>
+    <string name="models_alias_dialog_title">Rename model</string>
+    <string name="models_alias_dialog_label">Display name (empty resets)</string>
+
+    <!-- Accessibility descriptions -->
+    <string name="desc_settings">Settings</string>
+    <string name="desc_model">Change speech model</string>
+    <string name="desc_audio_device">Audio input device</string>
+    <string name="desc_switch_keyboard">Switch keyboard</string>
+    <string name="desc_space">Space</string>
+    <string name="desc_copy">Copy</string>
+    <string name="desc_paste">Paste</string>
+    <string name="desc_arrow_up">Move up</string>
+    <string name="desc_arrow_left">Move left</string>
+    <string name="desc_arrow_down">Move down</string>
+    <string name="desc_arrow_right">Move right</string>
+    <string name="desc_backspace">Backspace</string>
+    <string name="desc_select_all">Select all</string>
+    <string name="desc_enter">Enter</string>
+    <string name="desc_cancel_download">Cancel download</string>
+    <string name="desc_move_up">Move up</string>
+    <string name="desc_move_down">Move down</string>
+    <string name="desc_delete">Delete</string>
+    <string name="desc_rename">Rename</string>
+    <string name="desc_download_model">Download model</string>
+    <string name="desc_import_model">Import model</string>
+    <string name="desc_add_key">Add key</string>
+    <string name="models_download_section_vosk">Vosk (live transcription)</string>
+    <string name="models_download_section_whisper">Whisper (record, then transcribe)</string>
+    <string name="models_download_section_parakeet">Parakeet (record, then transcribe)</string>
+    <string name="models_download_section_parakeet_live">Streaming (live transcription)</string>
+    <string name="models_engine_vosk">Vosk</string>
+    <string name="models_engine_whisper">Whisper</string>
+    <string name="models_engine_parakeet">Parakeet</string>
+    <string name="models_engine_live">Live</string>
+    <string name="sherpa_error_load">Failed to load speech model</string>
 
     <string name="models_import_dialog_import">Import</string>
+    <string name="models_import_dialog_folder">Pick an extracted folder instead</string>
     <string name="models_import_dialog_title">Import Model</string>
     <string name="models_import_dialog_text_before_link">Manually download a Vosk model from </string>
     <string name="models_import_dialog_text_link">the Vosk website</string>
     <string name="models_import_dialog_text_after_link"> - make sure to pick a "small" model - and then choose it in the file picker after pressing import</string>
+    <string name="models_import_dialog_text_sherpa">For Whisper/Parakeet you can also pick the model files (encoder.onnx, decoder.onnx, tokens.txt) downloaded one by one from a sherpa-onnx Hugging Face repo - select them all at once in the file picker.</string>
 
     <!-- UI Preferences -->
-    <string name="ui_light_theme_header">Light Theme</string>
-    <string name="ui_light_theme_foreground_material_you_title">Use Material You foreground color</string>
-    <string name="ui_light_theme_foreground_color_title">Foreground color</string>
-    <string name="ui_light_theme_background_color_title">Background color</string>
-
-
-    <string name="ui_dark_theme_header">Dark Theme</string>
-    <string name="ui_dark_theme_foreground_material_you_title">Use Material You foreground color</string>
-    <string name="ui_dark_theme_foreground_color_title">Foreground color</string>
-    <string name="ui_dark_theme_background_color_title">Background color</string>
-
-    <string name="ui_theme_reset_color">Reset</string>
+    <string name="ui_theme_mode_title">Theme</string>
+    <string name="ui_theme_mode_system">System</string>
+    <string name="ui_theme_mode_light">Light</string>
+    <string name="ui_theme_mode_dark">Dark</string>
+    <string name="ui_dynamic_colors_title">Dynamic colors</string>
+    <string name="ui_dynamic_colors_summary">Use the system wallpaper colors for the keyboard accent (Android 12+)</string>
+    <string name="ui_key_borders_title">Key borders</string>
+    <string name="ui_key_borders_summary">Draw an outline around each key</string>
+    <string name="ui_accent_title">Accent color</string>
+    <string name="ui_accent_summary">Mic button and active keys. System follows the theme.</string>
+    <string name="ui_keyboard_background_title">Keyboard background</string>
+    <string name="ui_keyboard_background_summary">Panel color in both light and dark mode. Default follows the theme.</string>
+    <string name="ui_custom_color_apply">Apply</string>
 
     <!--  Logic Preferences  -->
-    <string name="logic_logic_header">Logic</string>
     <string name="logic_keep_screen_awake_title">Keep screen awake</string>
     <string name="logic_listen_immediately_title">Listen immediately</string>
-    <string name="logic_listen_immediately_summery">Start listening immediately when the recognizer is ready.</string>
+    <string name="logic_listen_immediately_summary">Start listening immediately when the recognizer is ready.</string>
     <string name="logic_auto_switch_back_title">Auto switch back</string>
-    <string name="logic_auto_switch_back_summery">Automatically switch to previous keyboard whenever the keyboard is hidden.</string>
+    <string name="logic_auto_switch_back_summary">Automatically switch to previous keyboard whenever the keyboard is hidden.</string>
     <string name="logic_keep_model_in_ram_title">Keep the model in RAM (when closed)</string>
-    <string name="logic_keep_model_in_ram_summery">Keeps the model in RAM to make opening the keyboard faster. Takes more RAM.</string>
+    <string name="logic_keep_model_in_ram_summary">Keeps models in RAM for instant switches; each uses ~100 MB–1 GB. Turning this off frees every model — the per-model pins below only apply while it is on.</string>
+    <string name="logic_vad_auto_stop_title">Stop recording on silence</string>
+    <string name="logic_vad_auto_stop_summary">For Whisper/Parakeet: end the take automatically after a second of silence instead of a second mic tap.</string>
+    <string name="logic_auto_switch_model_title">Match model to field language</string>
+    <string name="logic_auto_switch_model_summary">Automatically select the model matching the text field language, when the app reports one.</string>
+    <string name="logic_remember_locale_title">Remember language per app</string>
+    <string name="logic_remember_locale_summary">Re-apply the language last used in each app when Sayboard opens there.</string>
+    <string name="logic_keep_alive_title">Keep alive in background</string>
+    <string name="logic_keep_alive_summary">Keep the model in memory with a permanent notification, so switching keyboards stays instant. Uses RAM, no battery drain while idle.</string>
+    <string name="notification_keep_alive_channel">Sayboard keep-alive</string>
+    <string name="notification_keep_alive_title">Sayboard model loaded</string>
+    <string name="notification_keep_alive_text">Voice input stays instant when switching keyboards</string>
+    <string name="notification_keep_alive_reenable">Keep-alive could not start in the background — tap to open settings</string>
+    <string name="notification_keep_alive_stop">Turn off</string>
+    <string name="logic_backup_title">Back up configuration</string>
+    <string name="logic_backup_summary">Save models list, custom keys, and settings to a JSON file (model files not included).</string>
+    <string name="logic_restore_title">Restore configuration</string>
+    <string name="logic_restore_summary">Restore from a backup file. Models whose files are missing are skipped.</string>
+    <string name="backup_saved">Backup saved</string>
+    <string name="backup_failed">Backup failed — see log</string>
+    <string name="restore_failed">Restore failed — not a Sayboard backup?</string>
     <string name="logic_auto_capitalize_title">Auto Capitalize</string>
     <string name="logic_auto_capitalize_summary">Automatically capitalize the first letter after a period (where applicable).</string>
     <string name="logic_default_ime">Default IME</string>
@@ -120,13 +168,21 @@
     <string name="keyboard_height_landscape_title">Keyboard height in landscape mode (%)</string>
 
     <string name="keyboard_keys_header">Keys</string>
-    <string name="keyboard_keys_top_title">Top Keys</string>
-    <string name="keyboard_keys_left_title">Left Keys</string>
-    <string name="keyboard_keys_right_title">Right Keys</string>
+    <string name="keyboard_keys_custom_title">Custom Row (max 5 keys)</string>
+    <string name="keyboard_show_custom_row_portrait_title">Show custom row in portrait</string>
+    <string name="keyboard_show_custom_row_portrait_summary">Display the user-configurable key row below the navigation keys</string>
+    <string name="keyboard_show_custom_row_landscape_title">Show custom row in landscape</string>
+    <string name="keyboard_show_custom_row_landscape_summary">Display the user-configurable key row above the navigation keys</string>
 
     <string name="keyboard_keys_dialog_key_entry">Label: %1$s, Text: %2$s</string>
     <string name="keyboard_keys_dialog_key_label_label">Label</string>
     <string name="keyboard_keys_dialog_key_text_label">Text</string>
+    <string name="keyboard_keys_dialog_key_long_label_label">Long-press label</string>
+    <string name="keyboard_keys_dialog_key_long_text_label">Long-press text</string>
+    <string name="keyboard_keys_dialog_keys_title">Keys (%1$d of %2$d)</string>
+    <string name="keyboard_keys_dialog_empty">No custom keys yet — add one below.</string>
+    <string name="keyboard_keys_dialog_add_title">Add a key</string>
+    <string name="keyboard_keys_dialog_add_button">Add key</string>
 
 
     <!--  Notifications  -->
@@ -138,4 +194,41 @@
     <string name="notification_download_content_unzipping">Extracting Model…</string>
     <string name="notification_download_content_finished">Download Finished!</string>
     <string name="notification_download_content_error">Error downloading Model</string>
+
+    <!--  Crash reporter  -->
+    <string name="crash_title">Sayboard crashed</string>
+    <string name="crash_copy">Copy report</string>
+    <string name="crash_share">Share report</string>
+    <string name="crash_copied">Crash report copied</string>
+
+    <!-- Audit-fix keys (appended; docs wave owns wording updates) -->
+    <string name="ime_voice_blocked_password">Voice input is disabled in password fields</string>
+    <string name="ime_no_key_mapping">Some characters can\'t be typed in this field</string>
+    <string name="ime_nothing_to_copy">Nothing selected to copy</string>
+    <string name="ime_paste_truncated">Pasted text was truncated to 8,000 characters</string>
+    <string name="logic_clear_app_locales_title">Clear per-app languages</string>
+    <string name="logic_clear_app_locales_summary">Forget the language remembered for each app</string>
+    <string name="logic_app_locales_cleared">Per-app languages cleared</string>
+    <string name="logic_allow_external_recognition_title">Allow other apps to use Sayboard voice input</string>
+    <string name="logic_allow_external_recognition_summary">Off by default. When on, other apps on this device may send speech through Sayboard. The microphone indicator is shown while serving them, and requests are rate-limited.</string>
+    <string name="logic_file_logging_title">Write diagnostic log file</string>
+    <string name="logic_file_logging_summary">Keep a private on-device log to help diagnose failures. Turn off to keep logcat only.</string>
+    <string name="logic_offline_mode_title">Offline mode</string>
+    <string name="logic_offline_mode_summary">Block all model downloads and update checks. Installed models keep working.</string>
+    <string name="logic_offline_blocked">Offline mode is on — downloads are disabled</string>
+    <string name="logic_allow_voice_in_password_title">Allow voice input in password fields</string>
+    <string name="logic_allow_voice_in_password_summary">Off by default. When on, dictated text is committed even where the field reports a password type. Only enable if dictation must work everywhere.</string>
+    <string name="logic_restore_paths_title">Restore installed-model list from backup</string>
+    <string name="logic_restore_paths_summary">Backups record private install paths. Leave off to skip the model list on restore (models on disk are re-detected anyway).</string>
+    <string name="models_export_log">Export log</string>
+    <string name="models_log_saved">Log exported</string>
+    <string name="models_log_failed">Log export failed — see log</string>
+    <string name="crash_share_warning">Warning: the report may contain text you dictated. Review it before sharing.</string>
+    <string name="models_hash_verified">Verified download</string>
+    <string name="models_hash_unverified">Recorded download (not re-verified)</string>
+    <string name="models_download_state_failed">Failed</string>
+    <string name="ime_paste_confirm_title">Paste large text?</string>
+    <string name="ime_paste_confirm_message">The clipboard is large; only the first 8,000 characters will be pasted.</string>
+    <string name="models_keep_in_ram">Keep in RAM</string>
+    <string name="models_pin_refused_ram">Not enough free RAM to keep this model loaded</string>
 </resources>

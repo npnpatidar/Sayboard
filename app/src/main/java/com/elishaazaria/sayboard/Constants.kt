@@ -2,6 +2,7 @@ package com.elishaazaria.sayboard
 
 import android.content.Context
 import android.os.Environment
+import com.elishaazaria.sayboard.downloader.Sanitize
 import java.io.File
 import java.util.*
 
@@ -12,8 +13,8 @@ object Constants {
     val BackspaceRepeatStartDelay: Long = 500
     val BackspaceRepeatDelay: Long = 100
 
-    @JvmField
-    var DOWNLOADER_CHANNEL_ID = "downloader"
+    const val DOWNLOADER_CHANNEL_ID = "downloader"
+    const val KEEP_ALIVE_CHANNEL_ID = "keep_alive"
     private fun getCacheDir(context: Context): File {
         return if (Environment.isExternalStorageEmulated() || !Environment.isExternalStorageRemovable()) {
             context.externalCacheDir!!
@@ -39,7 +40,11 @@ object Constants {
         val dir = File(
             getTempDir(context).absolutePath, "ModelZips"
         )
-        return File(dir, filename)
+        // U16: edge-sanitize the name, then fail closed on containment.
+        val safe = Sanitize.sanitizeFilenameStrict(filename) ?: Sanitize.flattenName(filename)
+        val out = File(dir, safe)
+        Sanitize.requireWithin(dir, out)
+        return out
     }
 
     @JvmStatic

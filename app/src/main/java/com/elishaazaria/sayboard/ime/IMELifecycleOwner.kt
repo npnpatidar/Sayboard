@@ -34,10 +34,45 @@ class IMELifecycleOwner :
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     }
 
+    /**
+     * I-08: hidden input view rests at ON_STOP, not ON_PAUSE. Observers pause
+     * while stopped and re-deliver on the next ON_START/ON_RESUME; the
+     * ViewModelStore spans sessions (cleared only in onDestroy), so no
+     * composed state is lost. [onPause] remains for a visible-but-paused
+     * beat when one applies; this method steps through it first so Compose
+     * sees the full RESUMED -> STARTED transition.
+     */
+    fun onStop() {
+        try {
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+            }
+        } catch (_: Exception) {
+        }
+        try {
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
+            }
+        } catch (_: Exception) {
+        }
+    }
+
     fun onDestroy() {
-        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
-        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-        store.clear()
+        // I-08: hidden already rests at STOPPED/CREATED, so guard repeats.
+        try {
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
+            }
+        } catch (_: Exception) {
+        }
+        try {
+            lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+        } catch (_: Exception) {
+        }
+        try {
+            store.clear()
+        } catch (_: Exception) {
+        }
     }
 
     /**

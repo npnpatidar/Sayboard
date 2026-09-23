@@ -1,17 +1,16 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.protobuf'
-apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
 apply plugin: 'org.jetbrains.kotlin.plugin.serialization'
-apply plugin: 'com.mikepenz.aboutlibraries.plugin'
+apply plugin: 'com.mikepenz.aboutlibraries.plugin.android'
 
 
 android {
-    compileSdk 34
+    compileSdkVersion = "android-37.1"
     defaultConfig {
         applicationId "com.elishaazaria.sayboard"
         minSdkVersion 23
-        targetSdkVersion 34
-        versionCode 402010
+        targetSdkVersion 35
+        versionCode 402014
         versionName "v4.2.1"
         ndkVersion "r25c"
     }
@@ -27,109 +26,100 @@ android {
             enable true
             reset()
             include "arm64-v8a", "armeabi-v7a", "x86", "x86_64"
-            universalApk true
+            // pass -PbuildUniversalApk=false to skip the universal APK (CI builds one ABI only)
+            universalApk (project.findProperty('buildUniversalApk')?.toBoolean() ?: true)
         }
     }
 
-    android.applicationVariants.configureEach { variant ->
-        variant.outputs.configureEach { output ->
-//            output.outputFileName = "${variant.getFlavorName()}-${variant.buildType.name}-v${versionCode}_${versionName}-${new Date().format('ddMMMyyyy_HH-mm')}-${output.getFilter(com.android.build.OutputFile.ABI)}.apk"
-            var abi_name = output.getFilter(output.ABI) ? output.getFilter(output.ABI) : "Universal"
-            output.outputFileName = "Sayboard_${abi_name}.apk"
-        }
+    // CI: -PabiFilter=arm64-v8a produces a single per-ABI APK with no universal
+    def abiFilter = project.findProperty('abiFilter')
+    if (abiFilter != null) {
+        splits.abi.reset()
+        splits.abi.include abiFilter
+        splits.abi.universalApk = false
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
+    // Newer Compose/Material libraries ship JVM 11 bytecode; kotlinc must
+    // target 11 to inline them (default 1.8 no longer suffices)
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+        }
     }
     buildFeatures {
-        viewBinding true
         compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+        // IME.kt reads BuildConfig.DEBUG; AGP no longer enables this by default
+        buildConfig true
     }
 
     namespace 'com.elishaazaria.sayboard'
 
-    packagingOptions {
+    packaging {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
 
     lint {
-        lintConfig = file("app/lint.xml")
+        lintConfig = file("lint.xml")
     }
 }
 
 //ext.abiCodes = ['armeabi-v7a':1, x86:2, x86_64:3]
 ext.abiCodes = ["armeabi-v7a": 1, "arm64-v8a": 2, "x86": 3, "x86_64": 4]
 
-// For each APK output variant, override versionCode with a combination of
-// ext.abiCodes * 1000 + variant.versionCode. In this example, variant.versionCode
-// is equal to defaultConfig.versionCode. If you configure product flavors that
-// define their own versionCode, variant.versionCode uses that value instead.
-android.applicationVariants.configureEach { variant ->
-
-    // Assigns a different version code for each output APK
-    // other than the universal APK.
-    variant.outputs.each { output ->
-
-        // Stores the value of ext.abiCodes that is associated with the ABI for this variant.
-        def variantVersionCode =
-                // Determines the ABI for this variant and returns the mapped value.
-                project.ext.abiCodes.get(output.getFilter(output.ABI))
-
-        // Because abiCodes.get() returns null for ABIs that are not mapped by ext.abiCodes,
-        // the following code doesn't override the version code for universal APKs.
-        // However, because you want universal APKs to have the lowest version code,
-        // this outcome is desirable.
-        if (variantVersionCode != null) {
-
-            // Assigns the new version code to versionCodeOverride, which changes the
-            // version code for only the output APK, not for the variant itself. Skipping
-            // this step causes Gradle to use the value of variant.versionCode for the APK.
-            output.versionCodeOverride =
-                    variant.versionCode + variantVersionCode
-        }
-    }
-}
-
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:3.24.4"
-    }
-    plugins {
-        grpc {
-            artifact = 'io.grpc:protoc-gen-grpc-java:1.52.0'
-        }
-    }
-    generateProtoTasks {
-        all().each { task ->
-            task.builtins {
-                java { option 'lite' }
+// For each APK output variant, name the APK per ABI and override versionCode
+// with a combination of ext.abiCodes + variant.versionCode, so per-ABI APKs
+// sort above the universal APK. Uses the new Variant API (AGP 9 removed the
+// old applicationVariants API).
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        variant.outputs.forEach { output ->
+            def abiName = "Universal"
+            output.filters.each { filter ->
+                if (filter.filterType.toString() == "ABI") {
+                    abiName = filter.identifier
+                }
             }
-            task.plugins {
-                grpc { option 'lite' }
+            output.outputFileName.set("Sayboard_${abiName}.apk")
+
+            // Because abiCodes.get() returns null for ABIs that are not mapped
+            // by ext.abiCodes, the version code is only overridden for
+            // per-ABI APKs. However, because you want universal APKs to have
+            // the lowest version code, this outcome is desirable.
+            def variantVersionCode = project.ext.abiCodes.get(abiName)
+            if (variantVersionCode != null) {
+                output.versionCode.set(output.versionCode.get() + variantVersionCode)
             }
         }
     }
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'net.java.dev.jna:jna:5.13.0@aar'
+    implementation 'androidx.appcompat:appcompat:1.8.0'
+    implementation 'net.java.dev.jna:jna:5.17.0@aar'
     implementation 'com.alphacephei:vosk-android:0.3.32'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.android.material:material:1.11.0'
+    // sherpa-onnx: offline Whisper + Parakeet (NeMo TDT) inference.
+    // Official release AAR (with jniLibs) republished via JitPack.
+    // NOTE: use the submodule coordinate; com.github.k2-fsa:sherpa-onnx
+    // pulls desktop/jar duplicates that break dexing.
+    // Supply chain: JitPack builds are unsigned; artifact hashes are pinned
+    // in gradle/sherpa-onnx.PROVENANCE and verified in CI. Do not bump the
+    // version without updating that file.
+    implementation 'com.github.k2-fsa.sherpa-onnx:sherpa-onnx:1.13.8'
+    // tar.bz2 model archives (sherpa-onnx releases ship .tar.bz2)
+    implementation 'org.apache.commons:commons-compress:1.27.1'
+    implementation 'androidx.core:core-ktx:1.16.0'
+    // Directory-tree import (DocumentFile) for extracted model folders
+    implementation 'androidx.documentfile:documentfile:1.0.1'
+    implementation 'com.google.android.material:material:1.14.0'
 
 
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.9.0'
 //    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
 //    implementation 'androidx.lifecycle:lifecycle-extensions:2.6.2'
 //    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
@@ -138,23 +128,16 @@ dependencies {
 //    implementation 'androidx.preference:preference:1.2.1'
 
     implementation 'org.greenrobot:eventbus:3.3.1'
-    implementation 'dev.gustavoavila:java-android-websocket-client:2.0.1'
-    implementation 'io.grpc:grpc-okhttp:1.52.0'
-    implementation 'io.grpc:grpc-protobuf-lite:1.52.0'
-    implementation 'io.grpc:grpc-stub:1.52.0'
-    compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
 
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0'
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0"
 
     implementation 'dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-beta14'
     implementation 'dev.patrickgold.jetpref:jetpref-datastore-ui:0.1.0-beta14'
     implementation 'dev.patrickgold.jetpref:jetpref-material-ui:0.1.0-beta14'
 
-    implementation "org.burnoutcrew.composereorderable:reorderable:0.9.6"
-
-    def composeBom = platform('androidx.compose:compose-bom:2023.10.00')
+    def composeBom = platform('androidx.compose:compose-bom:2026.08.00')
     implementation composeBom
     androidTestImplementation composeBom
 
@@ -187,7 +170,7 @@ dependencies {
     implementation 'androidx.compose.material3:material3-window-size-class'
 
     // Optional - Integration with activities
-    implementation 'androidx.activity:activity-compose:1.8.2'
+    implementation 'androidx.activity:activity-compose:1.10.1'
     // Optional - Integration with ViewModels
 //    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2'
     // Optional - Integration with LiveData
@@ -195,5 +178,5 @@ dependencies {
     // Optional - Integration with RxJava
 //    implementation 'androidx.compose.runtime:runtime-rxjava2'
 
-    implementation "com.mikepenz:aboutlibraries-compose:11.1.4"
+    implementation "com.mikepenz:aboutlibraries-compose:14.1.0"
 }
