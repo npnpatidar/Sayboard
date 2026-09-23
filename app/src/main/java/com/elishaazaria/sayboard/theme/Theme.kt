@@ -15,7 +15,7 @@ import com.elishaazaria.sayboard.sayboardPreferenceModel
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 /**
- * Settings-screen theme, Voxscribe-style: soft surface-container background,
+ * Settings-screen theme: soft surface-container background,
  * blue primary (or the system dynamic accent when enabled), full day/night
  * palettes following the selected theme mode (system/light/dark).
  */

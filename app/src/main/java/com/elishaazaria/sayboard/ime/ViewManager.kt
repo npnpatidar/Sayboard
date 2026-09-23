@@ -1018,7 +1018,7 @@ class ViewManager(private val ime: Context) : AbstractComposeView(ime),
     }
 
     /**
-     * A Voxscribe-style key face: flat rounded rect in the functional-key
+     * A flat rounded-rect key face in the functional-key
      * color (theme surface), glyphs in the contrasting on-surface color.
      * Used for space, backspace, and the custom key caps.
      */
@@ -1107,7 +1107,7 @@ class ViewManager(private val ime: Context) : AbstractComposeView(ime),
 }
 
 /**
- * Keyboard theme, Voxscribe-style: soft surface-container panel (never pure
+ * Keyboard theme: soft surface-container panel (never pure
  * black), blue primary mic pill (red while listening), surface-variant key
  * faces with contrasting glyphs. Day/night background + foreground stay
  * user-configurable (see UI settings); the remaining roles are derived for
