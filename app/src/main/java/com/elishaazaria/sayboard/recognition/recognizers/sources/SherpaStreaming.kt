@@ -96,9 +96,9 @@ class SherpaStreaming(private val sherpaModel: SherpaLocalModel) : RecognizerSou
                 val dir = File(sherpaModel.path)
                 val encoder = ArchiveTools.findOnnx(dir, "encoder")
                     ?: throw IOException("Streaming encoder .onnx missing")
-                val decoder = ArchiveTools.findOnnx(dir, "decoder")
+                val decoder = ArchiveTools.findOnnxSmall(dir, "decoder")
                     ?: throw IOException("Streaming decoder .onnx missing")
-                val joiner = ArchiveTools.findOnnx(dir, "joiner")
+                val joiner = ArchiveTools.findOnnxSmall(dir, "joiner")
                     ?: throw IOException("Streaming joiner .onnx missing")
                 val tokens = ArchiveTools.findFile(dir, "tokens", ".txt")
                     ?: throw IOException("Streaming tokens.txt missing")
@@ -187,7 +187,13 @@ class SherpaStreaming(private val sherpaModel: SherpaLocalModel) : RecognizerSou
             if (len <= 0L || len > SHERPA_MAX_BYTES) throw IOException("model size refused")
             // R1: header sniff on each weight file, in addition to the
             // size/marker checks (findOnnx already sniff-gates selection).
-            if (f.name.lowercase().endsWith(".onnx") && !ArchiveTools.isPlausibleOnnx(f)) {
+            // Joiners and stateless decoders are legitimately sub-MB:
+            // head-only sniff, no floor. Encoder keeps the full check.
+            val name = f.name.lowercase()
+            val smallWeight = "joiner" in name || "decoder" in name
+            val plausible = if (smallWeight) ArchiveTools.isPlausibleOnnxHead(f)
+                else ArchiveTools.isPlausibleOnnx(f)
+            if (name.endsWith(".onnx") && !plausible) {
                 AppLog.e(TAG, "magic refused leaf=${f.name.take(80)}")
                 throw IOException("model magic refused")
             }

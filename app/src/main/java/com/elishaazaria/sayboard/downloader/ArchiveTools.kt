@@ -313,6 +313,21 @@ object ArchiveTools {
     }
 
     /**
+     * Small-weight lookup for transducer models (zipformer streaming,
+     * Parakeet transducer): joiners are legitimately sub-MB (a real
+     * 0.98 MiB zipformer joiner was refused by the floor), and stateless
+     * decoder/predictors can be tens of KB (a real 25 KB file refused the
+     * same way). Same exemption shape as the Silero VAD file: head-only
+     * sniff (first-byte tag + printable-fraction ceiling), no size floor.
+     * Encoder lookups keep [findOnnx] with the floor (encoders are always
+     * hundreds of MB; placeholders there are the actual threat).
+     */
+    fun findOnnxSmall(modelDir: File, infix: String): File? {
+        return findFile(modelDir, "$infix.int8", ".onnx", 0L, headOnlyOnnx = true)
+            ?: findFile(modelDir, infix, ".onnx", 0L, headOnlyOnnx = true)
+    }
+
+    /**
      * True when [modelDir] holds a live-transcription checkpoint: either a
      * NeMo unified streaming model (decoder metadata marker) or a zipformer
      * streaming export ("chunk" in the encoder file name, e.g.
@@ -387,7 +402,8 @@ object ArchiveTools {
         modelDir: File,
         infix: String,
         extension: String = "",
-        minSizeBytes: Long = 0L
+        minSizeBytes: Long = 0L,
+        headOnlyOnnx: Boolean = false
     ): File? {
         val needle = infix.lowercase()
         val ext = extension.lowercase()
@@ -412,7 +428,10 @@ object ArchiveTools {
                     // R1/D11: .onnx candidates must pass the header sniff;
                     // failures are skipped (debug-logged) so decoys can
                     // never shadow real weights; scanning continues.
-                    if (name.endsWith(".onnx") && !isPlausibleOnnx(f)) {
+                    // headOnlyOnnx (joiner/small weights): head sniff only,
+                    // no size floor — see findOnnxSmall.
+                    val plausible = if (headOnlyOnnx) isPlausibleOnnxHead(f) else isPlausibleOnnx(f)
+                    if (name.endsWith(".onnx") && !plausible) {
                         if (BuildConfig.DEBUG) {
                             AppLog.d(TAG, "findFile skipping implausible onnx")
                         }
