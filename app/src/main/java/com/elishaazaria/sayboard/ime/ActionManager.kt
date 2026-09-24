@@ -256,12 +256,20 @@ class ActionManager(private val ime: IME, private val viewManager: ViewManager) 
             if (defaultKnown) {
                 ime.switchInputMethod(defaultIme)
             } else {
-                if (defaultIme.isNotBlank() && !defaultKnown) {
-                    Toast.makeText(ime, R.string.toast_error_no_previous_ime, Toast.LENGTH_SHORT)
-                        .show()
-                } else if (showError) {
-                    Toast.makeText(ime, R.string.toast_error_no_previous_ime, Toast.LENGTH_SHORT)
-                        .show()
+                // switchToPreviousInputMethod is flaky by platform design:
+                // false after reboot (no previous recorded), mid-switch
+                // races, and some OEMs. Fall back to the system picker,
+                // which always works; toast only if even that throws.
+                try {
+                    mInputMethodManager.showInputMethodPicker()
+                } catch (_: Exception) {
+                    if (defaultIme.isNotBlank() && !defaultKnown) {
+                        Toast.makeText(ime, R.string.toast_error_no_previous_ime, Toast.LENGTH_SHORT)
+                            .show()
+                    } else if (showError) {
+                        Toast.makeText(ime, R.string.toast_error_no_previous_ime, Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 }
             }
         }
