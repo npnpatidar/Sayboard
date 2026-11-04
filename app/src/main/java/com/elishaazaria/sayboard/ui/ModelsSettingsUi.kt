@@ -349,16 +349,23 @@ class ModelsSettingsUi(private val activity: SettingsActivity) {
                         .fillMaxWidth()
                         .padding(10.dp)
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .padding(10.dp)
                     ) {
-
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(
-                                text = item.displayName,
-                                fontSize = 20.sp
-                            )
+                        // Model name
+                        Text(
+                            text = item.displayName,
+                            fontSize = 20.sp,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        // Model details
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 4.dp)
+                        ) {
                             // Recursive walk of a 100-600 MB tree: measured once
                             // per row off the main thread, never in remember().
                             var sizeLabel by remember(item.path) { mutableStateOf("") }
@@ -393,88 +400,95 @@ class ModelsSettingsUi(private val activity: SettingsActivity) {
                             }
                             Text(text = item.path, fontSize = 12.sp)
                         }
-                        IconButton(
-                            onClick = { moveModel(index, index - 1) },
-                            enabled = index > 0
+                        // Buttons
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(imageVector = Icons.Default.KeyboardArrowUp, contentDescription = stringResource(id = R.string.desc_move_up))
-                        }
-                        IconButton(
-                            onClick = { moveModel(index, index + 1) },
-                            enabled = index < modelOrderData.size - 1
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.KeyboardArrowDown,
-                                contentDescription = stringResource(id = R.string.desc_move_down)
-                            )
-                        }
-                        IconButton(onClick = {
-                            renameTarget = item
-                            renameText = item.alias
-                        }) {
-                            Icon(imageVector = Icons.Default.Edit, contentDescription = stringResource(id = R.string.desc_rename))
-                        }
-                        // Per-model RAM pin: pinned models stay resident once
-                        // loaded (instant switches); unpin to free on switch.
-                        // Default pinned (absent from the unpinned map).
-                        // F3: pinning runs a sum-aware RAM guard off-main-thread;
-                        // unpinning (freeing) always applies immediately. F4:
-                        // keys stored relative; both forms removed on re-pin.
-                        IconButton(onClick = {
-                            runCatching {
-                                val modelsDir = Constants.getModelsDirectory(activity)
-                                val abs = item.resolveAbsolute(modelsDir).absolutePath
-                                val cur = prefs.unpinnedModels.get().toMutableMap()
-                                if (!com.elishaazaria.sayboard.Tools.isPathPinned(cur, modelsDir, abs)) {
-                                    cur.keys.toList().forEach { k ->
-                                        if (com.elishaazaria.sayboard.Tools.pinKeyMatches(modelsDir, k, abs)) cur.remove(k)
-                                    }
-                                    prefs.unpinnedModels.set(cur)
-                                } else {
-                                    kotlin.concurrent.thread {
-                                        val ok = runCatching {
-                                            val pinnedAbs = modelOrderData.map {
-                                                it.resolveAbsolute(modelsDir).absolutePath
-                                            }.filter { p ->
-                                                p != abs && com.elishaazaria.sayboard.Tools.isPathPinned(cur, modelsDir, p)
-                                            }
-                                            com.elishaazaria.sayboard.Tools.residentFitsRam(activity, abs, pinnedAbs)
-                                        }.getOrDefault(true)
-                                        activity.runOnUiThread {
-                                            if (ok) {
-                                                runCatching {
-                                                    val upd = prefs.unpinnedModels.get().toMutableMap()
-                                                    upd[com.elishaazaria.sayboard.data.InstalledModelReference.relativeKey(modelsDir, abs)] = "1"
-                                                    prefs.unpinnedModels.set(upd)
+                            IconButton(
+                                onClick = { moveModel(index, index - 1) },
+                                enabled = index > 0
+                            ) {
+                                Icon(imageVector = Icons.Default.KeyboardArrowUp, contentDescription = stringResource(id = R.string.desc_move_up))
+                            }
+                            IconButton(
+                                onClick = { moveModel(index, index + 1) },
+                                enabled = index < modelOrderData.size - 1
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.KeyboardArrowDown,
+                                    contentDescription = stringResource(id = R.string.desc_move_down)
+                                )
+                            }
+                            IconButton(onClick = {
+                                renameTarget = item
+                                renameText = item.alias
+                            }) {
+                                Icon(imageVector = Icons.Default.Edit, contentDescription = stringResource(id = R.string.desc_rename))
+                            }
+                            // Per-model RAM pin: pinned models stay resident once
+                            // loaded (instant switches); unpin to free on switch.
+                            // Default pinned (absent from the unpinned map).
+                            // F3: pinning runs a sum-aware RAM guard off-main-thread;
+                            // unpinning (freeing) always applies immediately. F4:
+                            // keys stored relative; both forms removed on re-pin.
+                            IconButton(onClick = {
+                                runCatching {
+                                    val modelsDir = Constants.getModelsDirectory(activity)
+                                    val abs = item.resolveAbsolute(modelsDir).absolutePath
+                                    val cur = prefs.unpinnedModels.get().toMutableMap()
+                                    if (!com.elishaazaria.sayboard.Tools.isPathPinned(cur, modelsDir, abs)) {
+                                        cur.keys.toList().forEach { k ->
+                                            if (com.elishaazaria.sayboard.Tools.pinKeyMatches(modelsDir, k, abs)) cur.remove(k)
+                                        }
+                                        prefs.unpinnedModels.set(cur)
+                                    } else {
+                                        kotlin.concurrent.thread {
+                                            val ok = runCatching {
+                                                val pinnedAbs = modelOrderData.map {
+                                                    it.resolveAbsolute(modelsDir).absolutePath
+                                                }.filter { p ->
+                                                    p != abs && com.elishaazaria.sayboard.Tools.isPathPinned(cur, modelsDir, p)
                                                 }
-                                            } else {
-                                                Toast.makeText(activity, R.string.models_pin_refused_ram, Toast.LENGTH_LONG).show()
+                                                com.elishaazaria.sayboard.Tools.residentFitsRam(activity, abs, pinnedAbs)
+                                            }.getOrDefault(true)
+                                            activity.runOnUiThread {
+                                                if (ok) {
+                                                    runCatching {
+                                                        val upd = prefs.unpinnedModels.get().toMutableMap()
+                                                        upd[com.elishaazaria.sayboard.data.InstalledModelReference.relativeKey(modelsDir, abs)] = "1"
+                                                        prefs.unpinnedModels.set(upd)
+                                                    }
+                                                } else {
+                                                    Toast.makeText(activity, R.string.models_pin_refused_ram, Toast.LENGTH_LONG).show()
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                        }) {
-                            // F4: dual-form pin lookup (relative stored, absolute legacy).
-                            val pinned = runCatching {
-                                val dir = Constants.getModelsDirectory(activity)
-                                com.elishaazaria.sayboard.Tools.isPathPinned(
-                                    unpinned ?: emptyMap(), dir,
-                                    item.resolveAbsolute(dir).absolutePath
+                            }) {
+                                // F4: dual-form pin lookup (relative stored, absolute legacy).
+                                val pinned = runCatching {
+                                    val dir = Constants.getModelsDirectory(activity)
+                                    com.elishaazaria.sayboard.Tools.isPathPinned(
+                                        unpinned ?: emptyMap(), dir,
+                                        item.resolveAbsolute(dir).absolutePath
+                                    )
+                                }.getOrDefault(!(unpinned?.containsKey(item.path) ?: false))
+                                Icon(
+                                    imageVector = Icons.Default.PushPin,
+                                    contentDescription = stringResource(id = R.string.models_keep_in_ram),
+                                    tint = if (pinned) MaterialTheme.colors.primary
+                                    else MaterialTheme.colors.onSurface.copy(alpha = 0.38f)
                                 )
-                            }.getOrDefault(!(unpinned?.containsKey(item.path) ?: false))
-                            Icon(
-                                imageVector = Icons.Default.PushPin,
-                                contentDescription = stringResource(id = R.string.models_keep_in_ram),
-                                tint = if (pinned) MaterialTheme.colors.primary
-                                else MaterialTheme.colors.onSurface.copy(alpha = 0.38f)
-                            )
-                        }
-                        IconButton(onClick = {
-                            Tools.deleteModel(item, activity)
-                            reloadModels()
-                        }) {
-                            Icon(imageVector = Icons.Default.Delete, contentDescription = stringResource(id = R.string.desc_delete))
+                            }
+                            IconButton(onClick = {
+                                Tools.deleteModel(item, activity)
+                                reloadModels()
+                            }) {
+                                Icon(imageVector = Icons.Default.Delete, contentDescription = stringResource(id = R.string.desc_delete))
+                            }
                         }
                     }
                 }
